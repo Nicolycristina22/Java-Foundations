@@ -1,10 +1,14 @@
 package exercicio;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class CrudAvancado {
     public static void main(String[] args) {
+
+
+
         ArrayList<String> nomesAlunos = new ArrayList<>();
         ArrayList<Double> notasAlunos = new ArrayList<>();
         ArrayList<Integer> idadeAlunos = new ArrayList<>();
