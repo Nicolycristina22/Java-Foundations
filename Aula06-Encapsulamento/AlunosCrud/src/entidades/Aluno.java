@@ -4,6 +4,7 @@ public class Aluno {
     private String nome;
     private double nota;
     private double nota2;
+    private String escola;
 
     public Aluno(String nome, double nota, double nota2) {
         this.nome = nome;
