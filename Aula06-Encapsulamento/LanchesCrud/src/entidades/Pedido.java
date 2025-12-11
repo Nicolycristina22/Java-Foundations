@@ -1,47 +1,50 @@
 package entidades;
 
 public class Pedido {
-    private String nome;
-    private double preco;
+    private String nomeLanche;
     private int quantidade;
+    private double preco;
 
-    public Pedido(String nome, double preco, int quantidade) {
-        this.nome = nome;
-        this.preco = preco;
+    //Inicializa o pedido com os valores do lanche
+    public Pedido(String nomeLanche, int quantidade, double preco) {
+        this.nomeLanche = nomeLanche;
         this.quantidade = quantidade;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    //Getters - Consultar atributos privados
+    public String getNomeLanche() {
+        return nomeLanche;
     }
 
     public int getQuantidade() {
         return quantidade;
     }
 
+    public double getPreco() {
+        return preco;
+    }
+
+    //Setters - Atualizar atributos privados
+    public void setNomeLanche(String nomeLanche) {
+        this.nomeLanche = nomeLanche;
+    }
+
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
 
-    public double calcularTotal() {
-        return preco * quantidade;
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    //Calcular Valor Total
+    public double calcularTotal(){
+        return this.preco * this.quantidade;
     }
 
     @Override
     public String toString() {
-        return " | " + nome + " | " +  preco + " | " + quantidade + " | " + calcularTotal() + " | ";
-
+        return " | " + nomeLanche + " | " + quantidade + " | R$ " + preco +  " | R$ " + calcularTotal() + " | ";
     }
 }
