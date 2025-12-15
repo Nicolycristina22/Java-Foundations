@@ -1,20 +1,19 @@
 package org.example;
 
 
+import org.example.entidades.Aluno;
 import org.example.entidades.GerenciarAlunos;
 
 import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-        GerenciarAlunos alunos = new GerenciarAlunos();
+        GerenciarAlunos gerenciarAlunos = new GerenciarAlunos();
 
-        try {
-            alunos.conectar();
-            System.out.println("Conectado com sucesso!");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+       Aluno aluno1 = new Aluno("diego", 10,10);
+
+       //gerenciarAlunos.cadastrarAluno(aluno1);
+       gerenciarAlunos.excluirAluno(1);
     }
 
 }
