@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produtos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ2X4WQG9pO3fy1mQeBzs2kPHgNfW5k6iq3qZ7Vz+q9fpjqbx39a+tpB0Z+m" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #ffb6c1; /* Fundo rosa bebê */
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: none;
+            padding: 20px;
+        }
+
+        .card-header {
+            background-color: #ffb6c1; /* Rosa bebê */
+            padding: 20px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            padding: 12px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #ff9bb7; /* Rosa mais intenso */
+            box-shadow: 0 0 8px rgba(255, 155, 183, 0.5);
+        }
+
+        .btn-primary {
+            background-color: #ff9bb7;
+            border-color: #ff9bb7;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff7d92;
+            border-color: #ff7d92;
+        }
+
+        .response {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #e9f7fd;
+            color: #31708f;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            display: none;
+        }
+
+        .response.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .form-control, .form-select {
+            height: 45px;
+        }
+
+        .form-group label {
+            margin-bottom: 10px;
+        }
+
+        .input-group-text {
+            background-color: #ffb6c1;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Cadastro de Produto</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="productForm">
+                            <div class="form-group">
+                                <label for="tipo" class="form-label">Tipo</label>
+                                <select id="tipo" class="form-select" required>
+                                    <option value="camisa">Camisa</option>
+                                    <option value="blusa">Blusa</option>
+                                    <option value="sueter">Suéter</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="quantidade" class="form-label">Quantidade</label>
+                                <input type="number" id="quantidade" class="form-control" required min="1">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="valor" class="form-label">Valor</label>
+                                <input type="number" id="valor" class="form-control" required step="0.01">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tamanho" class="form-label">Tamanho</label>
+                                <select id="tamanho" class="form-select" required>
+                                    <option value="PP">PP</option>
+                                    <option value="P">P</option>
+                                    <option value="M">M</option>
+                                    <option value="G">G</option>
+                                    <option value="GG">GG</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="marca" class="form-label">Marca</label>
+                                <input type="text" id="marca" class="form-control" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="response" class="response"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('productForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const tipo = document.getElementById('tipo').value;
+            const quantidade = parseInt(document.getElementById('quantidade').value);
+            const valor = parseFloat(document.getElementById('valor').value).toFixed(2);
+            const tamanho = document.getElementById('tamanho').value;
+            const marca = document.getElementById('marca').value;
+
+            const produto = {
+                tipo: tipo,
+                quantidade: quantidade,
+                valor: valor,
+                tamanho: tamanho,
+                marca: marca
+            };
+
+            fetch('http://localhost:8080/roupas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(produto)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const responseElement = document.getElementById('response');
+                responseElement.style.display = 'block';
+                responseElement.classList.remove('error');
+                responseElement.textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                const responseElement = document.getElementById('response');
+                responseElement.style.display = 'block';
+                responseElement.classList.add('error');
+                responseElement.textContent = 'Erro ao enviar dados: ' + error.message;
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0j0rDshC9LPCYgFz5sXf8cP6U5zI2H6pIT5cLf5t5uqc5yTz" crossorigin="anonymous"></script>
+</body>
+
+</html>
