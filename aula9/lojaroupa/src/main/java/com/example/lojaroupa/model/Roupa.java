@@ -24,6 +24,12 @@ public class Roupa {
     private double valor;
 
 
+    public Roupa(DadosRoupa dadosRoupa) {
+        this.marca = dadosRoupa.marca();
+        this.tipo = dadosRoupa.tipo();
+        this.tamanho = dadosRoupa.tamanho();
+        this.quantidade = dadosRoupa.quantidade();
+        this.valor = dadosRoupa.valor();
 
-
+    }
 }
